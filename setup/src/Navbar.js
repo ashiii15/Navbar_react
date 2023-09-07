@@ -5,6 +5,19 @@ import logo from "./logo.svg";
 
 const Navbar = () => {
   const [showLink,setShowLink] = useState(false)
+  const linksContainerRef = useRef(null)
+  const linksRef = useRef(null)
+   useEffect(()=>{
+  const linksHeight = linksRef.current.getBoundingClientRect().height
+  //  console.log(linksHeight);
+    if(showLink){
+      linksContainerRef.current.style.height = `${linksHeight}px`
+    }
+    else{
+      linksContainerRef.current.style.height = `0px`
+    }
+
+  },[showLink])
 
   return (
     <nav>
@@ -17,8 +30,8 @@ const Navbar = () => {
         </div>
         
           
-          <div className={`${showLink ? `links-container show-container`:`links-container`}`}>
-          <ul className="links">
+          <div className={'links-container'} ref={linksContainerRef}>
+          <ul className="links" ref={linksRef}>
             {links.map((link) => {
               const { id, url, text } = link;
               return (
